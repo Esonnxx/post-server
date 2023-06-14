@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 const mysql = require('mysql')
 
 const app = express()
@@ -15,8 +16,9 @@ const dbConfig = {
 }//body-parser is a commonly used middleware in Express, which is used to parse the data(body) of incoming requests
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-
+app.use(cors())
 app.post('/data', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*')
   // type of the Post res is String, they have to convert to the number format
   const soilValue = parseFloat(req.body.soilMoisture)
   const soilPercentage = parseFloat(req.body.soilMoisturePercentage)
